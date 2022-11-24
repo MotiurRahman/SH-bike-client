@@ -5,7 +5,7 @@ import { AuthUserContext } from "../../AuthContext/AuthContext";
 import Loading from "../../Component/Loading/Loading";
 import useRole from "../../hooks/useRole";
 
-const AdminRoutes = ({ children }) => {
+const BuyerRoutes = ({ children }) => {
   const { user, loader } = useContext(AuthUserContext);
   const [role, isRoleLoading] = useRole(user?.email);
   const location = useLocation();
@@ -14,10 +14,10 @@ const AdminRoutes = ({ children }) => {
     return <Loading></Loading>;
   }
 
-  if (user && role == "admin") {
+  if (user && role == "buyer") {
     return children;
   }
   return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
 };
 
-export default AdminRoutes;
+export default BuyerRoutes;

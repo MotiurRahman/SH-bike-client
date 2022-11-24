@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useRole = (email) => {
-  const [role, setRole] = useState("buyer");
+  const [role, setRole] = useState("");
   const [isRoleLoading, setIsRoleLoading] = useState(true);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ const useRole = (email) => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setRole(data.isAdmin);
+          setRole(data.role);
           setIsRoleLoading(false);
         });
     }

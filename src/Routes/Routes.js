@@ -2,7 +2,10 @@ import AddProduct from "../Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../Dashboard/AllSellers/AllSellers";
 import AllUsers from "../Dashboard/AllUsers/AllUsers";
+import MyBuyers from "../Dashboard/MyBuyers/MyBuyers";
 import MyOrders from "../Dashboard/MyOrders/MyOrders";
+import MyProducts from "../Dashboard/MyProducts/MyProducts";
+import ReportedItems from "../Dashboard/ReportedItems/ReportedItems";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -10,6 +13,9 @@ import Signup from "../Pages/Signup/Signup";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import DisplayError from "../Shared/DisplayError/DisplayError";
 import PageNotFound from "../Shared/PageNotFound/PageNotFound";
+import AdminRoutes from "./AdminRoutes/AdminRoutes";
+import BuyerRoutes from "./BuyerRoutes/BuyerRoutes";
+import SellerRoutes from "./SellerRoutes/SellerRoutes";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../Layout/Main");
@@ -46,23 +52,69 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/myorders",
-        element: <MyOrders></MyOrders>,
+        element: (
+          <BuyerRoutes>
+            <MyOrders></MyOrders>
+          </BuyerRoutes>
+        ),
       },
-      {
-        path: "/dashboard/allusers",
-        element: <AllUsers></AllUsers>,
-      },
+
       {
         path: "/dashboard/addproducts",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <SellerRoutes>
+            <AddProduct></AddProduct>
+          </SellerRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/myproducts",
+        element: (
+          <SellerRoutes>
+            <MyProducts></MyProducts>
+          </SellerRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/mybuyers",
+        element: (
+          <SellerRoutes>
+            <MyBuyers></MyBuyers>
+          </SellerRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/reported-items",
+        element: (
+          <AdminRoutes>
+            <ReportedItems></ReportedItems>
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/allsellers",
-        element: <AllSellers></AllSellers>,
+        element: (
+          <AdminRoutes>
+            <AllSellers></AllSellers>
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/allbuyers",
-        element: <AllBuyers></AllBuyers>,
+        element: (
+          <AdminRoutes>
+            <AllBuyers></AllBuyers>
+          </AdminRoutes>
+        ),
+      },
+
+      {
+        path: "/dashboard/allusers",
+        element: (
+          <AdminRoutes>
+            <AllUsers></AllUsers>
+          </AdminRoutes>
+        ),
       },
     ],
   },
