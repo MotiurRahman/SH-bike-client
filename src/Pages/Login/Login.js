@@ -9,6 +9,7 @@ const Login = () => {
   const { login, googleLogin } = useContext(AuthUserContext);
   const [msg, setMessage] = useState("");
   const [loginUserEmail, setLoginUserEMail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [token] = useToken(loginUserEmail);
   let navigate = useNavigate();
   let location = useLocation();
@@ -22,19 +23,43 @@ const Login = () => {
 
   if (token) {
     navigate(from, { replace: true });
+    setLoading(true);
   }
 
   const handleLogin = (data) => {
+    setLoading(true);
     console.log(data.email, data.password);
     login(data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        setMessage("You have loggedin");
+        // setMessage("You have loggedin");
         setLoginUserEMail(data.email);
       })
       .catch((error) => {
         setMessage(error.message);
+        setLoading(false);
+      });
+  };
+
+  const saveUser = (name, email, role = "buyer") => {
+    const user = { name, email, role };
+    fetch("http://localhost:8000/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setLoginUserEMail(email);
+          toast("Your Account has been Created Successfully");
+        } else {
+          navigate(from, { replace: true });
+        }
       });
   };
 
@@ -42,23 +67,17 @@ const Login = () => {
     googleLogin()
       .then((result) => {
         const user = result.user;
-
-        setMessage("You have loggedin with google");
         console.log(user);
-
-        toast("You have loggedin with google");
+        saveUser(user.displayName, user.email);
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
         setMessage(errorMessage);
       });
   };
 
   return (
-    <div className="lg:w-1/2 m-auto ">
+    <div className="lg:w-1/2 m-auto">
       <form
         className="flex justify-items-center items-center flex-col"
         onSubmit={handleSubmit(handleLogin)}
@@ -115,7 +134,12 @@ const Login = () => {
         </div>
 
         {/* <p>{data}</p> */}
-        <input type="submit" className="btn btn-wide my-2" value="Login" />
+        {loading ? (
+          <button className="btn loading btn-wide">... Just wait</button>
+        ) : (
+          <input type="submit" className="btn btn-wide my-2" value="Login" />
+        )}
+
         <p>
           New to this website?{" "}
           <Link className="text-primary" to="/signup">

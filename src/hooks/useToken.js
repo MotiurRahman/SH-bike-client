@@ -9,6 +9,7 @@ const useToken = (email) => {
         .then((data) => {
           if (data.accessToken) {
             localStorage.setItem("accessToken", data.accessToken);
+            console.log("Token", data.accessToken);
             setToken(data.accessToken);
           }
         });

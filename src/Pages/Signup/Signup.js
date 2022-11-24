@@ -16,16 +16,20 @@ const Signup = () => {
   } = useForm();
 
   const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [token] = useToken(createdUserEmail);
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
   if (token) {
-    navigate("/login");
+    setLoading(false);
+    // navigate("/");
+    navigate(from, { replace: true });
   }
 
   const handleSignUp = (data) => {
+    setLoading(true);
     console.log(data);
     setMessage("");
     const displayName = data.displayName;
@@ -33,28 +37,29 @@ const Signup = () => {
 
     createAccount(data.email, data.password)
       .then((res) => {
-        console.log(res.user);
         const profile = { displayName, photoURL };
         console.log(profile);
         updateUser(profile)
           .then(() => {
-            saveUser(data.displayName, data.email);
+            saveUser(data.displayName, data.email, data.role);
           })
           .catch((error) => {
             const errorMessage = error.message;
             setMessage(errorMessage);
+            setLoading(false);
           });
       })
       .catch((error) => {
         console.log(error.message);
         const errorMessage = error.message;
         setMessage(errorMessage);
+        setLoading(false);
       });
   };
 
-  const saveUser = (name, email) => {
-    const user = { name, email };
-    fetch("https://doctors-server-motiurrahman.vercel.app/users", {
+  const saveUser = (name, email, role = "buyer") => {
+    const user = { name, email, role };
+    fetch("http://localhost:8000/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,9 +69,12 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        toast("Uaer Created Successfully");
-        setCreatedUserEmail(email);
-        //  navigate("/login");
+        if (data.acknowledged) {
+          setCreatedUserEmail(email);
+          toast("Your Account has been Created Successfully");
+        } else {
+          navigate(from, { replace: true });
+        }
       });
   };
 
@@ -74,9 +82,7 @@ const Signup = () => {
     googleLogin()
       .then((result) => {
         const user = result.user;
-        console.log("Email", user.email);
-        toast("You have loggedin with google");
-        navigate(from, { replace: true });
+        saveUser(user.displayName, user.email);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -87,7 +93,7 @@ const Signup = () => {
       });
   };
   return (
-    <div className="lg:w-1/2 m-auto ">
+    <div className="lg:w-1/2 m-auto">
       <form
         className="flex justify-items-center items-center flex-col"
         onSubmit={handleSubmit(handleSignUp)}
@@ -143,12 +149,12 @@ const Signup = () => {
                 value: 6,
                 message: "Password must be six cahracter long",
               },
-              pattern: {
-                value:
-                  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/,
-                message:
-                  "Minimum six characters, at least one uppercase letter, one lowercase letter, one number and one special character:",
-              },
+              //   pattern: {
+              //     value:
+              //       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/,
+              //     message:
+              //       "Minimum six characters, at least one uppercase letter, one lowercase letter, one number and one special character:",
+              //   },
             })}
             type="password"
             name="password"
@@ -160,15 +166,36 @@ const Signup = () => {
               {errors.password.message}
             </span>
           )}
+        </div>
+
+        <div className="form-control w-full max-w-xs mb-4">
+          <label className="label">
+            <span className="label-text-alt">Select User Mode</span>
+          </label>
+          <select
+            className="select select-bordered"
+            {...register("role", {
+              required: "Select user role",
+            })}
+            name="role"
+          >
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </select>
           <p className="text-green text-center">{message}</p>
         </div>
 
         {/* <p>{data}</p> */}
-        <input
-          type="submit"
-          className="btn btn-wide my-2"
-          value="Create an Account"
-        />
+        {loading ? (
+          <button className="btn loading btn-wide">Createting</button>
+        ) : (
+          <input
+            type="submit"
+            className="btn btn-wide my-2"
+            value="Create an Account"
+          />
+        )}
+
         <p>
           Already have an account?{" "}
           <Link className="text-primary" to="/login">
