@@ -83,9 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/myproducts",
-        loader: async () => {
-          return fetch();
-        },
+
         element: (
           <SellerRoutes>
             <MyProducts></MyProducts>
