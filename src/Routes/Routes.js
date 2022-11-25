@@ -8,6 +8,7 @@ import MyProducts from "../Dashboard/MyProducts/MyProducts";
 import MyWishList from "../Dashboard/MyWishList/MyWishList";
 import ReportedItems from "../Dashboard/ReportedItems/ReportedItems";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
+import Blog from "../Pages/Blog/Blog";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
       },
       {
         path: "/signup",
@@ -78,6 +83,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/myproducts",
+        loader: async () => {
+          return fetch();
+        },
         element: (
           <SellerRoutes>
             <MyProducts></MyProducts>

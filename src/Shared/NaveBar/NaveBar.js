@@ -44,6 +44,7 @@ const NaveBar = () => {
         ) : (
           <Link to="login">Login</Link>
         )}
+        <Link to="/blog">Blog</Link>
       </li>
     </>
   );

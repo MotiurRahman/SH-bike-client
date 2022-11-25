@@ -1,0 +1,13 @@
+.queAnsSec {
+    border: 5px solid black;
+    margin: 20px 7%;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: left;
+}
+
+ul li {
+    margin-left: 20px;
+    font-weight: 700;
+    list-style-type: circle;
+}
