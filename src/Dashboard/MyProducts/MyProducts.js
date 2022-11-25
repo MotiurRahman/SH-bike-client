@@ -15,7 +15,7 @@ const MyProducts = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["doctors"],
+    queryKey: ["myproducts"],
     queryFn: async () => {
       try {
         const res = await fetch("http://localhost:8000/myproducts", {
