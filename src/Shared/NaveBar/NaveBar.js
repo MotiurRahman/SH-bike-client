@@ -1,24 +1,48 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
+import Loading from "../../Component/Loading/Loading";
+import useRole from "../../hooks/useRole";
 
 const NaveBar = () => {
   const { user, loader, logout } = useContext(AuthUserContext);
+  const [role, isRoleLoading] = useRole(user?.email);
+
   const navigate = useNavigate();
   const handleLogout = () => {
     logout().then(() => {
       navigate("/");
     });
   };
+
   const menuBar = (
     <>
       <li>
         <Link to="/">Home</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        {user ? (
-          <Link onClick={handleLogout}>Logout</Link>
+        {role === "buyer" && <Link to={`/dashboard/myorders`}>Dashboard</Link>}
+        {role === "seller" && (
+          <Link to={`/dashboard/myproducts`}>Dashboard</Link>
+        )}
+        {role === "admin" && (
+          <Link to={`/dashboard/allsellers`}>Dashboard</Link>
+        )}
+
+        {user?.uid ? (
+          <>
+            <Link>Hi, {user.displayName}</Link>
+            {user?.photoURL && (
+              <Link>
+                <div className="avatar">
+                  <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img src={user?.photoURL} alt="" />
+                  </div>
+                </div>
+              </Link>
+            )}
+            <Link onClick={handleLogout}>Logout</Link>
+          </>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="login">Login</Link>
         )}
       </li>
     </>
@@ -58,7 +82,11 @@ const NaveBar = () => {
         <ul className="menu menu-horizontal p-0">{menuBar}</ul>
       </div>
       <div className="navbar-end">
-        <label tabIndex={0} className="btn btn-ghost lg:hidden">
+        <label
+          htmlFor="dashboard-drawer"
+          tabIndex={0}
+          className="btn btn-ghost lg:hidden"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
