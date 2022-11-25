@@ -26,6 +26,7 @@ const NaveBar = () => {
         {role === "admin" && (
           <Link to={`/dashboard/allsellers`}>Dashboard</Link>
         )}
+        <Link to="/blog">Blog</Link>
 
         {user?.uid ? (
           <>
@@ -44,7 +45,6 @@ const NaveBar = () => {
         ) : (
           <Link to="login">Login</Link>
         )}
-        <Link to="/blog">Blog</Link>
       </li>
     </>
   );
@@ -76,7 +76,7 @@ const NaveBar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Used bike buy and sell
+          SH bike buy and sell
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
