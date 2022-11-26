@@ -16,33 +16,30 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <span className="footer-title">Services</span>
+          <span className="footer-title">Categories</span>
           <Link to="" className="link link-hover">
-            Branding
+            Indian Bike
           </Link>
           <Link to="" className="link link-hover">
-            Design
+            Japanese Bike
           </Link>
           <Link to="" className="link link-hover">
-            Marketing
-          </Link>
-          <Link to="" className="link link-hover">
-            Advertisement
+            Chinese Bike
           </Link>
         </div>
         <div>
           <span className="footer-title">Company</span>
           <Link to="" className="link link-hover">
-            About us
+            HONDA
           </Link>
           <Link to="" className="link link-hover">
-            Contact
+            TVS
           </Link>
           <Link to="" className="link link-hover">
-            Jobs
+            BAJAJ
           </Link>
           <Link to="" className="link link-hover">
-            Press kit
+            SUZUKI
           </Link>
         </div>
         <div>
@@ -70,7 +67,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="bg-base-200 text-base-content">
-        <p>Copyright © 2022 - All right reserved by SH Bike BD</p>
+        <p className="text-center">
+          Copyright © 2022 - All right reserved by SH Bike BD
+        </p>
       </div>
     </footer>
   );

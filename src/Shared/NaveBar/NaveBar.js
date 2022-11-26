@@ -49,7 +49,7 @@ const NaveBar = () => {
     </>
   );
   return (
-    <div className="navbar lg:px-20 mt-2">
+    <div className="navbar mt-2">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

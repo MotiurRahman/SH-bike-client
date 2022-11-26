@@ -95,7 +95,7 @@ const Signup = () => {
   return (
     <div className="lg:w-1/2 m-auto">
       <form
-        className="flex justify-items-center items-center flex-col"
+        className="flex justify-items-center items-center flex-col mb-10"
         onSubmit={handleSubmit(handleSignUp)}
       >
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
@@ -202,11 +202,14 @@ const Signup = () => {
             Login
           </Link>
         </p>
+        <div className="divider">OR</div>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline btn-wide"
+        >
+          Continue with Google
+        </button>
       </form>
-      <div className="divider">OR</div>
-      <button onClick={handleGoogleLogin} className="btn btn-outline btn-wide">
-        Continue with Google
-      </button>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import MyWishList from "../Dashboard/MyWishList/MyWishList";
 import ReportedItems from "../Dashboard/ReportedItems/ReportedItems";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Blog from "../Pages/Blog/Blog";
+import CategoryWiseProducts from "../Pages/Home/CategoryWiseProducts/CategoryWiseProducts";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <DisplayError></DisplayError>,
     children: [
       { path: "/", element: <Home></Home> },
 
@@ -40,6 +42,19 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup></Signup>,
+      },
+      {
+        path: "/category/:category",
+        loader: async ({ params }) => {
+          return fetch(
+            `http://localhost:8000/allcategories/${params.category}`
+          );
+        },
+        element: (
+          <PrivateRoute>
+            <CategoryWiseProducts></CategoryWiseProducts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "*",

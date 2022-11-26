@@ -99,7 +99,7 @@ const MyProducts = () => {
                 <td>{product.productName}</td>
                 <td>{product.price}</td>
                 <td>{product.purchaseYear}</td>
-                <td>{product?.saleStates}</td>
+                <td>{product?.saleStatus}</td>
                 <td>
                   {product?.saleStates === "sold" ? (
                     <button className="btn btn-success" disabled="true">

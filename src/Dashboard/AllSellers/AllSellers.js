@@ -35,6 +35,27 @@ const AllSellers = () => {
     return <Loading></Loading>;
   }
 
+  const verify = (user) => {
+    if (window.confirm("Would you like to to verify this seller!")) {
+      console.log(user._id);
+      //console.log(data._id);
+      const URL = `http://localhost:8000/user?id=${user._id}`;
+      fetch(URL, {
+        method: "PATCH",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.updateCount > 0) {
+            toast("The seller is Successfully verified");
+            refetch();
+          }
+        });
+    }
+  };
+
   const handleDelete = (user) => {
     console.log(user._id);
     //console.log(data._id);
@@ -67,7 +88,7 @@ const AllSellers = () => {
               <th>id</th>
               <th>Name</th>
               <th>email</th>
-              <th>Role</th>
+              <th>Seller Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -78,7 +99,16 @@ const AllSellers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <button className="btn btn-success">Make Admin</button>
+                  {user?.verified === true ? (
+                    <p className="text-success">verified</p>
+                  ) : (
+                    <button
+                      onClick={() => verify(user)}
+                      className="btn btn-success"
+                    >
+                      Verify
+                    </button>
+                  )}
                 </td>
 
                 <td>

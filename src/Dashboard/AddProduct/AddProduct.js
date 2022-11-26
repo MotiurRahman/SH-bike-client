@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthUserContext } from "../../AuthContext/AuthContext";
 import Loading from "../../Component/Loading/Loading";
 
 const AddProduct = () => {
+  const { user } = useContext(AuthUserContext);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +34,9 @@ const AddProduct = () => {
         if (result.success) {
           const product = {
             productName: data.productName,
-            price: data.price,
+            originalPrice: data.originalPrice,
+            resalePrice: data.resalePrice,
+            usedYear: data.usedYear,
             condition: data.condition,
             category: data.category,
             phone: data.phone,
@@ -40,6 +44,9 @@ const AddProduct = () => {
             description: data.description,
             purchaseYear: data.purchaseYear,
             image: result.data.url,
+            email: user.email,
+            sellerName: user.displayName,
+            saleStatus: "available",
           };
           console.log("product:", product);
 
@@ -110,23 +117,43 @@ const AddProduct = () => {
           </div>
           <div className="form-control w-full max-w-xs my-2">
             <label className="label">
-              <span className="label-text">Price</span>
+              <span className="label-text">Original Price</span>
             </label>
             <input
-              {...register("price", {
+              {...register("originalPrice", {
                 required: "Product price is required",
               })}
               type="text"
-              name="price"
-              placeholder="Enter product name"
+              name="originalPrice"
+              placeholder="Enter Product Original Price"
               className="input input-bordered w-full max-w-xs"
             />
-            {errors.price && (
+            {errors.originalPrice && (
               <span className="text-red-600 text-left">
-                {errors.price.message}
+                {errors.originalPrice.message}
               </span>
             )}
           </div>
+          <div className="form-control w-full max-w-xs my-2">
+            <label className="label">
+              <span className="label-text">Resale Price</span>
+            </label>
+            <input
+              {...register("resalePrice", {
+                required: "Product price is required",
+              })}
+              type="text"
+              name="resalePrice"
+              placeholder="Enter product name"
+              className="input input-bordered w-full max-w-xs"
+            />
+            {errors.resalePrice && (
+              <span className="text-red-600 text-left">
+                {errors.resalePrice.message}
+              </span>
+            )}
+          </div>
+
           <div className="form-control w-full max-w-xs my-2">
             <label className="label">
               <span className="label-text">Condition</span>
@@ -250,6 +277,26 @@ const AddProduct = () => {
               type="date"
               name="purchaseYear"
               placeholder="Enter product description"
+              className="input input-bordered w-full max-w-xs"
+            />
+            {errors.purchaseYear && (
+              <span className="text-red-600 text-left">
+                {errors.purchaseYear.message}
+              </span>
+            )}
+          </div>
+
+          <div className="form-control w-full max-w-xs my-2">
+            <label className="label">
+              <span className="label-text">Years of use</span>
+            </label>
+            <input
+              {...register("usedYear", {
+                required: "Years of use is required",
+              })}
+              type="text"
+              name="usedYear"
+              placeholder="Enter years of use"
               className="input input-bordered w-full max-w-xs"
             />
             {errors.purchaseYear && (

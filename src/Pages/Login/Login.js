@@ -1,8 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
+import Loading from "../../Component/Loading/Loading";
 import useToken from "../../hooks/useToken";
 
 const Login = () => {
@@ -12,19 +18,16 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [token] = useToken(loginUserEmail);
   let navigate = useNavigate();
+  const navigation = useNavigation();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const [data, setData] = useState("");
-
-  if (token) {
-    navigate(from, { replace: true });
-    setLoading(true);
-  }
 
   const handleLogin = (data) => {
     setLoading(true);
@@ -76,8 +79,16 @@ const Login = () => {
       });
   };
 
+  if (navigation.state === "loading") {
+    return <Loading></Loading>;
+  }
+
+  if (token) {
+    navigate(from, { replace: true });
+    setLoading(true);
+  }
   return (
-    <div className="lg:w-1/2 m-auto">
+    <div className="lg:w-1/2 m-auto mb-10">
       <form
         className="flex justify-items-center items-center flex-col"
         onSubmit={handleSubmit(handleLogin)}
@@ -146,11 +157,14 @@ const Login = () => {
             Create new account
           </Link>
         </p>
+        <div className="divider">OR</div>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline btn-wide"
+        >
+          Continue with Google
+        </button>
       </form>
-      <div className="divider">OR</div>
-      <button onClick={handleGoogleLogin} className="btn btn-outline btn-wide">
-        Continue with Google
-      </button>
     </div>
   );
 };

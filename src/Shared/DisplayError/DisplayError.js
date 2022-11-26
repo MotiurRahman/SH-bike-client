@@ -12,16 +12,18 @@ const DisplayError = () => {
     });
   };
   return (
-    <div>
-      <p>Someting went wrong!!!</p>
-      <p className="text-red-400">{error.statusTest || error.message}</p>
-      <h4 className="text-3xl">
-        Please{" "}
-        <button className="btn btn-primary" onClick={handleSignout}>
-          Logout
-        </button>
-        and log back in
-      </h4>
+    <div className="flex items-center justify-center flex-col h-screen">
+      <div>
+        <p>Someting went wrong!!!</p>
+        <p className="text-red-400">{error.statusTest || error.message}</p>
+        <h4 className="text-3xl">
+          Please{" "}
+          <button className="btn btn-primary mr-2" onClick={handleSignout}>
+            Logout
+          </button>
+          and log back in
+        </h4>
+      </div>
     </div>
   );
 };
