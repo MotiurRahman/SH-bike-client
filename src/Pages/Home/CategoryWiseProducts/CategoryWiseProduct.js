@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Loading from "../../../Component/Loading/Loading";
 import blueTick from "../../../Assets/images/blueTick.png";
+import BookingModal from "../../BookingModal/BookingModal";
 
-const CategoryWiseProduct = ({ product }) => {
+const CategoryWiseProduct = ({ product, setProduct }) => {
   const [verified, setVefified] = useState(false);
   const {
     productName,
@@ -38,7 +39,7 @@ const CategoryWiseProduct = ({ product }) => {
   }, [email]);
 
   return (
-    <div className="card md:w-96 bg-base-100 shadow-xl">
+    <div className="card lg:w-96 bg-base-100 shadow-xl">
       <figure>
         <img className="h-40 w-full" src={image} alt="bike" />
       </figure>
@@ -80,7 +81,14 @@ const CategoryWiseProduct = ({ product }) => {
             )}
           </div>
           <div>
-            <button className="btn btn-accent">Book Now</button>
+            {/* <button className="btn btn-accent">Book Now</button> */}
+            <label
+              htmlFor="booking-modal"
+              onClick={() => setProduct(product)}
+              className="btn btn-accent"
+            >
+              Book Now
+            </label>
           </div>
         </div>
       </div>
