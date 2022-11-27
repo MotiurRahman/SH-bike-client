@@ -4,9 +4,12 @@ import toast from "react-hot-toast";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
 
 const BookingModal = ({ product, setProduct }) => {
-  const { _id, productName, resalePrice } = product;
+  const { _id, productName, resalePrice, image } = product;
   //const date = format(selectedDate, "PP");
-  // console.log(product);
+  //console.log(product);
+  const handleClose = () => {
+    setProduct();
+  };
   const { user } = useContext(AuthUserContext);
 
   const handleBooking = (event) => {
@@ -28,6 +31,7 @@ const BookingModal = ({ product, setProduct }) => {
       productName,
       resalePrice,
       meetingLocation,
+      image,
     };
 
     // TODO: send data to the server
@@ -48,6 +52,7 @@ const BookingModal = ({ product, setProduct }) => {
           toast.success("Booking confirmed");
           // refetch();
         } else {
+          setProduct(null);
           toast.error(data.message);
         }
       });
@@ -59,6 +64,7 @@ const BookingModal = ({ product, setProduct }) => {
       <div className="modal">
         <div className="modal-box relative">
           <label
+            onClick={handleClose}
             htmlFor="booking-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >

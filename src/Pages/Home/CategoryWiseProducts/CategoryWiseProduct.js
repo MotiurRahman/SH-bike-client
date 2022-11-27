@@ -5,7 +5,7 @@ import Loading from "../../../Component/Loading/Loading";
 import blueTick from "../../../Assets/images/blueTick.png";
 import BookingModal from "../../BookingModal/BookingModal";
 
-const CategoryWiseProduct = ({ product, setProduct }) => {
+const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const [verified, setVefified] = useState(false);
   const {
     productName,
@@ -84,6 +84,7 @@ const CategoryWiseProduct = ({ product, setProduct }) => {
             {/* <button className="btn btn-accent">Book Now</button> */}
             <label
               htmlFor="booking-modal"
+              disabled={role !== "buyer"}
               onClick={() => setProduct(product)}
               className="btn btn-accent"
             >

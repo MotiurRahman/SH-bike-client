@@ -1,7 +1,9 @@
 import { async } from "@firebase/util";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthUserContext } from "../../../AuthContext/AuthContext";
 import Loading from "../../../Component/Loading/Loading";
+import useRole from "../../../hooks/useRole";
 import BookingModal from "../../BookingModal/BookingModal";
 import Categories from "../Categories/Categories";
 import CategoryWiseProduct from "../CategoryWiseProducts/CategoryWiseProduct";
@@ -9,6 +11,8 @@ import Notice from "../Notice/Notice";
 
 const AdvertisedItems = () => {
   const [product, setProduct] = useState(null);
+  const { user } = useContext(AuthUserContext);
+  const [role, isRoleLoading] = useRole(user?.email);
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["advertise"],
     queryFn: async () => {
@@ -22,11 +26,12 @@ const AdvertisedItems = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-10">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-10">
       {data?.map((product) => (
         <CategoryWiseProduct
           key={product._id}
           product={product}
+          role={role}
           setProduct={setProduct}
         ></CategoryWiseProduct>
       ))}
