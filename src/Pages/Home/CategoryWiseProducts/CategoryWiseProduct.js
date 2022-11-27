@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Loading from "../../../Component/Loading/Loading";
+import blueTick from "../../../Assets/images/blueTick.png";
 
 const CategoryWiseProduct = ({ product }) => {
+  const [verified, setVefified] = useState(false);
   const {
     productName,
     originalPrice,
@@ -27,34 +29,39 @@ const CategoryWiseProduct = ({ product }) => {
   const date = new Date(dateStr);
   const updatedDate = date.toLocaleString();
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: () =>
-      fetch(`http://localhost:8000/user?email=${email}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }).then((res) => res.json()),
-  });
-
-  if (isLoading) return <Loading></Loading>;
-
-  if (error) return <Loading></Loading>;
+  useEffect(() => {
+    fetch(`http://localhost:8000/user?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setVefified(data.verified);
+      });
+  }, [email]);
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card md:w-96 bg-base-100 shadow-xl">
       <figure>
-        <img src={image} alt="Shoes" />
+        <img className="h-40 w-full" src={image} alt="bike" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">
           {productName}!<div className="badge badge-secondary">{category}</div>
         </h2>
-        <p>Used: {usedYear}</p>
-        <p>Location: {location}</p>
-        <p>Phone: {phone}</p>
-        <p>Desc: {description}</p>
-        <p>Posted on: {updatedDate}</p>
+        <p>
+          <b>Used:</b> {usedYear}
+        </p>
+        <p>
+          <b>Location: </b>
+          {location}
+        </p>
+        {/* <p>
+          <b>Phone:</b> {phone}
+        </p> */}
+        <p>
+          <b>Desc:</b> {description}
+        </p>
+        <p>
+          <b>Posted on:</b> {updatedDate}
+        </p>
         <div className="card-actions justify-between">
           <div className="badge badge-accent">
             Original Price: {originalPrice}
@@ -63,10 +70,14 @@ const CategoryWiseProduct = ({ product }) => {
             Resale Price: {resalePrice}
           </div>
         </div>
-        <div className="card-actions justify-between items-center">
+        <div className="card-actions justify-between items-center align-middle">
           <div className="flex">
-            <h1>Seller: {sellerName}</h1>
-            {data?.verified === true && <p>verified</p>}
+            <h1 className="mr-2">
+              <b>Seller:</b> {sellerName}
+            </h1>
+            {verified && (
+              <img className="h-6" src={blueTick} alt="verified"></img>
+            )}
           </div>
           <div>
             <button className="btn btn-accent">Book Now</button>

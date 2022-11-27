@@ -24,11 +24,11 @@ const Categories = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">All Catagories!</h2>
         {categories.map((categoy) => (
-          <Link key={categoy._id} to={`category/${categoy.categoryName}`}>
+          <Link key={categoy._id} to={`/category/${categoy.categoryName}`}>
             {categoy.categoryName} Bike
           </Link>
         ))}

@@ -85,7 +85,7 @@ const MyProducts = () => {
             <tr>
               <th>id</th>
               <th>Name</th>
-              <th>Price</th>
+              <th>Resale Price</th>
               <th>Purchase Year</th>
               <th>Sale_Status</th>
               <th>Advertise</th>
@@ -97,7 +97,7 @@ const MyProducts = () => {
               <tr key={product._id}>
                 <th>{index + 1}</th>
                 <td>{product.productName}</td>
-                <td>{product.price}</td>
+                <td>{product.resalePrice}</td>
                 <td>{product.purchaseYear}</td>
                 <td>{product?.saleStatus}</td>
                 <td>
