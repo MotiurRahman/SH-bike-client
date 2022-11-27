@@ -1,9 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { format } from "date-fns";
-import Loading from "../../../Component/Loading/Loading";
 import blueTick from "../../../Assets/images/blueTick.png";
-import BookingModal from "../../BookingModal/BookingModal";
 
 const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const [verified, setVefified] = useState(false);
@@ -12,7 +8,6 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
     originalPrice,
     resalePrice,
     usedYear,
-    condition,
     category,
     phone,
     location,
@@ -31,7 +26,7 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const updatedDate = date.toLocaleString();
 
   useEffect(() => {
-    fetch(`http://localhost:8000/user?email=${email}`)
+    fetch(`https://server-sh-bike-motiurrahman.vercel.app/user?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         setVefified(data.verified);

@@ -1,17 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { Link, useLoaderData } from "react-router-dom";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
 import Loading from "../../Component/Loading/Loading";
-import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const MyOrders = () => {
-  //const myproducts = useLoaderData();
-
   const { user } = useContext(AuthUserContext);
-
   const {
     data: myOrders = [],
     isLoading,
@@ -21,7 +15,7 @@ const MyOrders = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/myorders?email=${user?.email}`,
+          `https://server-sh-bike-motiurrahman.vercel.app/myorders?email=${user?.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -44,7 +38,7 @@ const MyOrders = () => {
     if (window.confirm("Would you like to to remove this order!")) {
       // console.log(order._id);
       //console.log(data._id);
-      const URL = `http://localhost:8000/myorders?id=${order._id}`;
+      const URL = `https://server-sh-bike-motiurrahman.vercel.app/myorders?id=${order._id}`;
       fetch(URL, {
         method: "DELETE",
         headers: {

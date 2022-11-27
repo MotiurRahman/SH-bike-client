@@ -1,28 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useLoaderData } from "react-router-dom";
 import Loading from "../../Component/Loading/Loading";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const AllBuyers = () => {
-  //const myproducts = useLoaderData();
   const [selectedBuyers, setSelectedBuyers] = useState(null);
 
   const {
-    data: allSeller = [],
+    data: allBuyers = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["allsellers"],
+    queryKey: ["allBuyers"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8000/allbuyers", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://server-sh-bike-motiurrahman.vercel.app/allbuyers",
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (e) {
@@ -38,7 +38,7 @@ const AllBuyers = () => {
   const handleDelete = (user) => {
     console.log(user);
     //console.log(data._id);
-    const URL = `http://localhost:8000/user?id=${user._id}`;
+    const URL = `https://server-sh-bike-motiurrahman.vercel.app/user?id=${user._id}`;
     fetch(URL, {
       method: "DELETE",
       headers: {
@@ -72,11 +72,11 @@ const AllBuyers = () => {
             </tr>
           </thead>
           <tbody>
-            {allSeller?.map((user, index) => (
-              <tr key={user._id}>
+            {allBuyers?.map((buyer, index) => (
+              <tr key={buyer._id}>
                 <th>{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
+                <td>{buyer.name}</td>
+                <td>{buyer.email}</td>
                 <td>
                   <button className="btn btn-success">Make Admin</button>
                 </td>
@@ -84,7 +84,7 @@ const AllBuyers = () => {
                 <td>
                   <label
                     htmlFor="confirmationModal"
-                    onClick={() => setSelectedBuyers(user)}
+                    onClick={() => setSelectedBuyers(buyer)}
                     className="btn btn-danger"
                   >
                     Delete

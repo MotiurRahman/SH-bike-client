@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useLoaderData } from "react-router-dom";
 import Loading from "../../Component/Loading/Loading";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
@@ -18,11 +16,14 @@ const AllSellers = () => {
     queryKey: ["allsellers"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8000/allsellers", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://server-sh-bike-motiurrahman.vercel.app/allsellers",
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (e) {
@@ -35,11 +36,11 @@ const AllSellers = () => {
     return <Loading></Loading>;
   }
 
-  const verify = (user) => {
+  const verify = (seller) => {
     if (window.confirm("Would you like to to verify this seller!")) {
-      console.log(user._id);
+      console.log(seller._id);
       //console.log(data._id);
-      const URL = `http://localhost:8000/user?id=${user._id}`;
+      const URL = `https://server-sh-bike-motiurrahman.vercel.app/user?id=${seller._id}`;
       fetch(URL, {
         method: "PATCH",
         headers: {
@@ -56,10 +57,10 @@ const AllSellers = () => {
     }
   };
 
-  const handleDelete = (user) => {
-    console.log(user._id);
+  const handleDelete = (seller) => {
+    console.log(seller._id);
     //console.log(data._id);
-    const URL = `http://localhost:8000/user?id=${user._id}`;
+    const URL = `https://server-sh-bike-motiurrahman.vercel.app/user?id=${seller._id}`;
     fetch(URL, {
       method: "DELETE",
       headers: {
@@ -93,17 +94,17 @@ const AllSellers = () => {
             </tr>
           </thead>
           <tbody>
-            {allSeller?.map((user, index) => (
-              <tr key={user._id}>
+            {allSeller?.map((seller, index) => (
+              <tr key={seller._id}>
                 <th>{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
+                <td>{seller.name}</td>
+                <td>{seller.email}</td>
                 <td>
-                  {user?.verified === true ? (
+                  {seller?.verified === true ? (
                     <p className="text-success">verified</p>
                   ) : (
                     <button
-                      onClick={() => verify(user)}
+                      onClick={() => verify(seller)}
                       className="btn btn-success"
                     >
                       Verify
@@ -114,7 +115,7 @@ const AllSellers = () => {
                 <td>
                   <label
                     htmlFor="confirmationModal"
-                    onClick={() => setSelectedSeller(user)}
+                    onClick={() => setSelectedSeller(seller)}
                     className="btn btn-danger"
                   >
                     Delete

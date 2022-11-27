@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         path: "/category/:category",
         loader: async ({ params }) => {
           return fetch(
-            `http://localhost:8000/allcategories/${params.category}`
+            `https://server-sh-bike-motiurrahman.vercel.app/allcategories/${params.category}`
           );
         },
         element: (
