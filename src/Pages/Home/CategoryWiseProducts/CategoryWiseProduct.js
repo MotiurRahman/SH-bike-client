@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import blueTick from "../../../Assets/images/blueTick.png";
+import wish from "../../../Assets/images/wish.png";
+import wishLove from "../../../Assets/images/newWish.png";
+import { AuthUserContext } from "../../../AuthContext/AuthContext";
+import toast from "react-hot-toast";
 
 const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const [verified, setVerified] = useState(false);
+  const { user } = useContext(AuthUserContext);
+
   const {
     productName,
     originalPrice,
@@ -33,6 +39,47 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
       });
   }, [email]);
 
+  const addToWishList = (product) => {
+    product.email = user?.email;
+    //console.log(product);
+
+    const wishPorduct = {
+      wishID: product._id,
+      email: user?.email,
+      image: product.image,
+      productName: product.productName,
+      resalePrice: product.resalePrice,
+      sellerName: product.sellerName,
+      saleStatus: product.saleStatus,
+      description: product.description,
+      phone: product.phone,
+      category: product.category,
+      dateAdded: product.dateAdded,
+      location: product.location,
+      usedYear: product.usedYear,
+    };
+
+    console.log(wishPorduct);
+
+    fetch("http://localhost:8000/wishlist", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(wishPorduct),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          toast.success("added to wishlist");
+        } else {
+          toast.error(data.message);
+        }
+      });
+  };
+
   return (
     <div className="card lg:w-96 bg-base-100 shadow-xl">
       <figure>
@@ -41,6 +88,9 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
       <div className="card-body">
         <h2 className="card-title">
           {productName}!<div className="badge badge-secondary">{category}</div>
+          <button onClick={() => addToWishList(product)} className="ml-auto">
+            <img className="h-8" src={wish} alt="wishList" />
+          </button>
         </h2>
         <p>
           <b>Used:</b> {usedYear}

@@ -158,6 +158,17 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/dashboard/payment2/:id",
+        loader: ({ params }) => {
+          return fetch(`http://localhost:8000/wishlist/${params.id}`);
+        },
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);
