@@ -32,7 +32,7 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const updatedDate = date.toLocaleString();
 
   useEffect(() => {
-    fetch(`http://localhost:8000/user?email=${email}`)
+    fetch(`https://server-sh-bike-motiurrahman.vercel.app/user?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         setVerified(data.verified);
@@ -44,8 +44,9 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
     //console.log(product);
 
     const wishPorduct = {
-      wishID: product._id,
+      bookingID: product._id,
       email: user?.email,
+      name: user?.displayName,
       image: product.image,
       productName: product.productName,
       resalePrice: product.resalePrice,
@@ -61,7 +62,7 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
 
     console.log(wishPorduct);
 
-    fetch("http://localhost:8000/wishlist", {
+    fetch("https://server-sh-bike-motiurrahman.vercel.app/wishlist", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

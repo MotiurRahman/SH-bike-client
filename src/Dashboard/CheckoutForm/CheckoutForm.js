@@ -2,7 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const CheckoutForm = ({ bookings }) => {
+const CheckoutForm = ({ wishlist, bookings }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
@@ -21,16 +21,21 @@ const CheckoutForm = ({ bookings }) => {
     meetingLocation,
   } = bookings;
 
+  //console.log(bookings);
+
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:8000/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({ resalePrice }),
-    })
+    fetch(
+      "https://server-sh-bike-motiurrahman.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({ resalePrice }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log("data:", data);
@@ -86,13 +91,28 @@ const CheckoutForm = ({ bookings }) => {
       setSuccess("Congrats! your payment completed");
       setTransactionId(paymentIntent.id);
       // store payment info in the database
-      const payment = {
-        resalePrice,
-        transactionId: paymentIntent.id,
-        email,
-        bookingId: _id,
-      };
-      fetch("http://localhost:8000/payments", {
+      let payment;
+      let URL;
+      console.log("wishlist", wishlist);
+      if (wishlist) {
+        URL = "https://server-sh-bike-motiurrahman.vercel.app/wishListPayments";
+        payment = {
+          resalePrice,
+          transactionId: paymentIntent.id,
+          email,
+          bookingId: _id,
+        };
+      } else {
+        URL = "https://server-sh-bike-motiurrahman.vercel.app/payments";
+        payment = {
+          resalePrice,
+          transactionId: paymentIntent.id,
+          email,
+          bookingId: _id,
+        };
+      }
+
+      fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,12 +123,15 @@ const CheckoutForm = ({ bookings }) => {
         .then((res) => res.json())
         .then((data) => {
           //  console.log(data);
-          fetch(`http://localhost:8000/sold-out?id=${bookingID}`, {
-            method: "PATCH",
-            headers: {
-              authorization: `bearer ${localStorage.getItem("accessToken")}`,
-            },
-          })
+          fetch(
+            `https://server-sh-bike-motiurrahman.vercel.app/sold-out?id=${bookingID}`,
+            {
+              method: "PATCH",
+              headers: {
+                authorization: `bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
             .then((res) => res.json())
             .then((data) => console.log(data));
         });

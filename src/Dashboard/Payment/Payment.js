@@ -7,7 +7,7 @@ import Loading from "../../Component/Loading/Loading";
 
 import CheckoutForm from "../CheckoutForm/CheckoutForm";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPT_PK);
-const Payment = () => {
+const Payment = ({ wishlist }) => {
   const bookings = useLoaderData();
   const navigation = useNavigation();
   if (navigation.state == "loading") {
@@ -24,7 +24,7 @@ const Payment = () => {
       </p>
       <div className="w-96 bg-slate-500 mt-10 mx-auto">
         <Elements stripe={stripePromise}>
-          <CheckoutForm bookings={bookings} />
+          <CheckoutForm wishlist={wishlist} bookings={bookings} />
         </Elements>
       </div>
     </div>

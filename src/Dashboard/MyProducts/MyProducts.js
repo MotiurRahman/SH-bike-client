@@ -18,11 +18,14 @@ const MyProducts = () => {
     queryKey: ["myproducts"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8000/myproducts", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://server-sh-bike-motiurrahman.vercel.app/myproducts",
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (e) {
@@ -38,7 +41,7 @@ const MyProducts = () => {
   const handleDelete = (product) => {
     console.log(product._id);
     //console.log(data._id);
-    const URL = `http://localhost:8000/myproducts?id=${product._id}`;
+    const URL = `https://server-sh-bike-motiurrahman.vercel.app/myproducts?id=${product._id}`;
     fetch(URL, {
       method: "DELETE",
       headers: {
@@ -60,12 +63,15 @@ const MyProducts = () => {
   // advertise your product
   const advertise = (id) => {
     if (window.confirm("Would you like to to advertise this product?")) {
-      fetch(`http://localhost:8000/myproducts?id=${id}`, {
-        method: "PATCH",
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://server-sh-bike-motiurrahman.vercel.app/myproducts?id=${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => {
           return res.json();
         })

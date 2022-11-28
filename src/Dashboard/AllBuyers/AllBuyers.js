@@ -15,11 +15,14 @@ const AllBuyers = () => {
     queryKey: ["allBuyers"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:8000/allbuyers", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://server-sh-bike-motiurrahman.vercel.app/allbuyers",
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (e) {
@@ -35,7 +38,7 @@ const AllBuyers = () => {
   const handleDelete = (user) => {
     console.log(user);
     //console.log(data._id);
-    const URL = `http://localhost:8000/user?id=${user._id}`;
+    const URL = `https://server-sh-bike-motiurrahman.vercel.app/user?id=${user._id}`;
     fetch(URL, {
       method: "DELETE",
       headers: {

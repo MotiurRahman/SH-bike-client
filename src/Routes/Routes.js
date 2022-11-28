@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         path: "/category/:category",
         loader: async ({ params }) => {
           return fetch(
-            `http://localhost:8000/allcategories/${params.category}`
+            `https://server-sh-bike-motiurrahman.vercel.app/allcategories/${params.category}`
           );
         },
         element: (
@@ -150,22 +150,26 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/payment/:id",
         loader: ({ params }) => {
-          return fetch(`http://localhost:8000/bookings/${params.id}`);
+          return fetch(
+            `https://server-sh-bike-motiurrahman.vercel.app/bookings/${params.id}`
+          );
         },
         element: (
           <PrivateRoute>
-            <Payment></Payment>
+            <Payment wishlist={false}></Payment>
           </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/payment2/:id",
         loader: ({ params }) => {
-          return fetch(`http://localhost:8000/wishlist/${params.id}`);
+          return fetch(
+            `https://server-sh-bike-motiurrahman.vercel.app/wishlist/${params.id}`
+          );
         },
         element: (
           <PrivateRoute>
-            <Payment></Payment>
+            <Payment wishlist={true}></Payment>
           </PrivateRoute>
         ),
       },

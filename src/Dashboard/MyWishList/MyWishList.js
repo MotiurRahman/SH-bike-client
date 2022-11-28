@@ -16,7 +16,7 @@ const MyWishList = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/wishlist?email=${user?.email}`,
+          `https://server-sh-bike-motiurrahman.vercel.app/wishlist?email=${user?.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -39,7 +39,7 @@ const MyWishList = () => {
     if (window.confirm("Would you like to to remove this product!")) {
       // console.log(order._id);
       //console.log(data._id);
-      const URL = `http://localhost:8000/wishlist?id=${wishList._id}`;
+      const URL = `https://server-sh-bike-motiurrahman.vercel.app/wishlist?id=${wishList._id}`;
       fetch(URL, {
         method: "DELETE",
         headers: {
@@ -87,7 +87,7 @@ const MyWishList = () => {
                 <td>
                   {/* <button className="btn btn-small btn-primary">Pay</button> */}
                   {wishList.resalePrice && !wishList.paid && (
-                    <Link to={`/dashboard/payment2/${wishList.wishID}`}>
+                    <Link to={`/dashboard/payment2/${wishList._id}`}>
                       {" "}
                       <button className="btn btn-primary">Pay</button>
                     </Link>

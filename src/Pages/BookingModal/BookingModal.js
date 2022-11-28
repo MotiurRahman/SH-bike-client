@@ -37,7 +37,7 @@ const BookingModal = ({ product, setProduct }) => {
     // TODO: send data to the server
     // and once data is saved then close the modal
     // and display success toast
-    fetch("http://localhost:8000/bookings", {
+    fetch("https://server-sh-bike-motiurrahman.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
