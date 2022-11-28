@@ -12,6 +12,7 @@ const NaveBar = () => {
   const handleLogout = () => {
     logout().then(() => {
       navigate("/");
+      window.location.reload(true);
     });
   };
 

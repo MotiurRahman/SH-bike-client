@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
 import Loading from "../../Component/Loading/Loading";
 
@@ -84,7 +85,16 @@ const MyOrders = () => {
                 <td>{order.productName}</td>
                 <td>{order.resalePrice}</td>
                 <td>
-                  <button className="btn btn-small btn-primary">Pay</button>
+                  {/* <button className="btn btn-small btn-primary">Pay</button> */}
+                  {order.resalePrice && !order.paid && (
+                    <Link to={`/dashboard/payment/${order._id}`}>
+                      {" "}
+                      <button className="btn btn-primary">Pay</button>
+                    </Link>
+                  )}
+                  {order.resalePrice && order.paid && (
+                    <samp className="text-success">Paid</samp>
+                  )}
                 </td>
 
                 <td>

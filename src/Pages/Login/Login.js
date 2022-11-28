@@ -22,6 +22,12 @@ const Login = () => {
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
+  if (token) {
+    navigate(from, { replace: true });
+    setLoading(true);
+    window.location.reload(true);
+  }
+
   const {
     register,
     handleSubmit,
@@ -83,16 +89,9 @@ const Login = () => {
     return <Loading></Loading>;
   }
 
-  if (token) {
-    navigate(from, { replace: true });
-    setLoading(true);
-  }
   return (
-    <div className="lg:w-1/2 m-auto mb-10">
-      <form
-        className="flex justify-items-center items-center flex-col"
-        onSubmit={handleSubmit(handleLogin)}
-      >
+    <div className="lg:w-1/2 m-auto mb-10 flex justify-items-center items-center flex-col">
+      <form onSubmit={handleSubmit(handleLogin)}>
         <h1 className="text-center text-2xl font-bold">Login</h1>
         <div className="form-control w-full max-w-xs my-2">
           <label className="label">
@@ -145,11 +144,13 @@ const Login = () => {
         </div>
 
         {/* <p>{data}</p> */}
-        {loading ? (
-          <button className="btn loading btn-wide">... Just wait</button>
-        ) : (
-          <input type="submit" className="btn btn-wide my-2" value="Login" />
-        )}
+        <div className="form-control w-full max-w-xs my-2 items-center">
+          {loading ? (
+            <button className="btn loading btn-wide">... Just wait</button>
+          ) : (
+            <input type="submit" className="btn btn-wide my-2" value="Login" />
+          )}
+        </div>
 
         <p>
           New to this website?{" "}
@@ -157,14 +158,11 @@ const Login = () => {
             Create new account
           </Link>
         </p>
-        <div className="divider">OR</div>
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline btn-wide"
-        >
-          Continue with Google
-        </button>
       </form>
+      <div className="divider">OR</div>
+      <button onClick={handleGoogleLogin} className="btn btn-outline btn-wide">
+        Continue with Google
+      </button>
     </div>
   );
 };

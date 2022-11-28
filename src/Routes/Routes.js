@@ -6,6 +6,7 @@ import MyBuyers from "../Dashboard/MyBuyers/MyBuyers";
 import MyOrders from "../Dashboard/MyOrders/MyOrders";
 import MyProducts from "../Dashboard/MyProducts/MyProducts";
 import MyWishList from "../Dashboard/MyWishList/MyWishList";
+import Payment from "../Dashboard/Payment/Payment";
 import ReportedItems from "../Dashboard/ReportedItems/ReportedItems";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Blog from "../Pages/Blog/Blog";
@@ -144,6 +145,17 @@ const router = createBrowserRouter([
           <AdminRoutes>
             <AllUsers></AllUsers>
           </AdminRoutes>
+        ),
+      },
+      {
+        path: "/dashboard/payment/:id",
+        loader: ({ params }) => {
+          return fetch(`http://localhost:8000/bookings/${params.id}`);
+        },
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
         ),
       },
     ],

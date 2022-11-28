@@ -26,6 +26,7 @@ const Signup = () => {
     setLoading(false);
     // navigate("/");
     navigate(from, { replace: true });
+    window.location.reload(true);
   }
 
   const handleSignUp = (data) => {
@@ -93,11 +94,8 @@ const Signup = () => {
       });
   };
   return (
-    <div className="lg:w-1/2 m-auto">
-      <form
-        className="flex justify-items-center items-center flex-col mb-10"
-        onSubmit={handleSubmit(handleSignUp)}
-      >
+    <div className="lg:w-1/2 m-auto flex justify-items-center items-center flex-col mb-10">
+      <form onSubmit={handleSubmit(handleSignUp)}>
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
         <div className="form-control w-full max-w-xs my-2">
           <label className="label">
@@ -202,14 +200,11 @@ const Signup = () => {
             Login
           </Link>
         </p>
-        <div className="divider">OR</div>
-        <button
-          onClick={handleGoogleLogin}
-          className="btn btn-outline btn-wide"
-        >
-          Continue with Google
-        </button>
       </form>
+      <div className="divider">OR</div>
+      <button onClick={handleGoogleLogin} className="btn btn-outline btn-wide">
+        Continue with Google
+      </button>
     </div>
   );
 };
