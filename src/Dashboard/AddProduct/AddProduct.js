@@ -50,7 +50,7 @@ const AddProduct = () => {
           };
           console.log("product:", product);
 
-          fetch("https://server-sh-bike-motiurrahman.vercel.app/addProduct", {
+          fetch("http://localhost:8000/addProduct", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -81,9 +81,7 @@ const AddProduct = () => {
   const { data: categories, isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch("https://server-sh-bike-motiurrahman.vercel.app/categories").then(
-        (res) => res.json()
-      ),
+      fetch("http://localhost:8000/categories").then((res) => res.json()),
   });
 
   if (isLoading) {

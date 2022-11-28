@@ -8,7 +8,7 @@ const Categories = () => {
 
   useEffect(() => {
     axios
-      .get("https://server-sh-bike-motiurrahman.vercel.app/allcategories")
+      .get("http://localhost:8000/allcategories")
       .then(function (response) {
         // handle success
         //console.log(response.data);

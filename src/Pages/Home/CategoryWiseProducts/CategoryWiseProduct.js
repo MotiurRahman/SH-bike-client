@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import blueTick from "../../../Assets/images/blueTick.png";
 
 const CategoryWiseProduct = ({ product, setProduct, role }) => {
-  const [verified, setVefified] = useState(false);
+  const [verified, setVerified] = useState(false);
   const {
     productName,
     originalPrice,
@@ -26,10 +26,10 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
   const updatedDate = date.toLocaleString();
 
   useEffect(() => {
-    fetch(`https://server-sh-bike-motiurrahman.vercel.app/user?email=${email}`)
+    fetch(`http://localhost:8000/user?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        setVefified(data.verified);
+        setVerified(data.verified);
       });
   }, [email]);
 

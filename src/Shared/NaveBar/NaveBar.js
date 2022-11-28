@@ -31,7 +31,7 @@ const NaveBar = () => {
         {user?.uid ? (
           <>
             <Link>
-              {role.toUpperCase()}: {user.displayName}
+              {role?.toUpperCase()}: {user?.displayName}
             </Link>
             {user?.photoURL && (
               <Link>

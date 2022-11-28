@@ -59,7 +59,7 @@ const Signup = () => {
 
   const saveUser = (name, email, role = "buyer") => {
     const user = { name, email, role };
-    fetch("https://server-sh-bike-motiurrahman.vercel.app/user", {
+    fetch("http://localhost:8000/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -15,7 +15,7 @@ const MyOrders = () => {
     queryFn: async () => {
       try {
         const res = await fetch(
-          `https://server-sh-bike-motiurrahman.vercel.app/myorders?email=${user?.email}`,
+          `http://localhost:8000/myorders?email=${user?.email}`,
           {
             headers: {
               authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -38,7 +38,7 @@ const MyOrders = () => {
     if (window.confirm("Would you like to to remove this order!")) {
       // console.log(order._id);
       //console.log(data._id);
-      const URL = `https://server-sh-bike-motiurrahman.vercel.app/myorders?id=${order._id}`;
+      const URL = `http://localhost:8000/myorders?id=${order._id}`;
       fetch(URL, {
         method: "DELETE",
         headers: {
