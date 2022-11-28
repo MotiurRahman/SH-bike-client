@@ -88,8 +88,16 @@ const CategoryWiseProduct = ({ product, setProduct, role }) => {
       <div className="card-body">
         <h2 className="card-title">
           {productName}!<div className="badge badge-secondary">{category}</div>
-          <button onClick={() => addToWishList(product)} className="ml-auto">
-            <img className="h-8" src={wish} alt="wishList" />
+          <button
+            disabled={role !== "buyer"}
+            onClick={() => addToWishList(product)}
+            className="ml-auto"
+          >
+            <img
+              className="h-8"
+              src={role !== "buyer" ? wish : wishLove}
+              alt="wishList"
+            />
           </button>
         </h2>
         <p>
