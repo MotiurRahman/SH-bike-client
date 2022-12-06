@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import Loading from "../../../Component/Loading/Loading";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-
   useEffect(() => {
     axios
       .get("https://server-sh-bike-motiurrahman.vercel.app/allcategories")

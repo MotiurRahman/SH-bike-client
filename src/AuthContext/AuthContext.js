@@ -55,6 +55,7 @@ const AuthContext = ({ children }) => {
   const authValue = {
     user,
     loader,
+    setLoader,
     createAccount,
     updateUser,
     login,

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -22,18 +22,18 @@ const Login = () => {
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
-  if (token) {
-    navigate(from, { replace: true });
-    setLoading(true);
-    window.location.reload(true);
-  }
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+      setLoading(true);
+    }
+  }, [token]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [data, setData] = useState("");
 
   const handleLogin = (data) => {
     setLoading(true);

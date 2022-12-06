@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthUserContext } from "../../AuthContext/AuthContext";
-import Loading from "../../Component/Loading/Loading";
 import useRole from "../../hooks/useRole";
 
 const NaveBar = () => {
@@ -9,6 +8,7 @@ const NaveBar = () => {
   const [role, isRoleLoading] = useRole(user?.email);
 
   const navigate = useNavigate();
+
   const handleLogout = () => {
     logout().then(() => {
       navigate("/");

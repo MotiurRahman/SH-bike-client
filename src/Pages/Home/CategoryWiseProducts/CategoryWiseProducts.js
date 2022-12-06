@@ -14,6 +14,7 @@ const CategoryWiseProducts = () => {
   const [role, isRoleLoading] = useRole(user?.email);
   const products = useLoaderData();
   const navigation = useNavigation();
+
   if (navigation.state === "loading") {
     return <Loading></Loading>;
   }

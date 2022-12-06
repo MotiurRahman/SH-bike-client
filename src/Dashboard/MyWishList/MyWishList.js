@@ -49,7 +49,7 @@ const MyWishList = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.deletedCount > 0) {
-            toast("Order wishlisted product Successfully");
+            toast("Remove wishlisted product Successfully");
             refetch();
           }
         });
